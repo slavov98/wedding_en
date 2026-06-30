@@ -483,12 +483,21 @@
     guestNames.querySelectorAll("input").forEach(i => { if (i.value.trim()) names.push(i.value.trim()); });
     return names.length ? names.join("; ") : "\u2014";
   }
-  function dietValue() {
-    // const v = $("diet").value;
-    // if (v === L.dietOtherValue) return ($("dietOther").value.trim() || v);
-    // return v;
-    return false;
+function dietValue() {
+  const n = parseInt(guestsSel.value) || 0;
+  const mealsSelected = [];
+
+  if (guestsSel.value === '3plus') {
+    return "3+ guests";
   }
+
+  for (let i = 1; i <= n; i++) {
+    const sel = document.querySelector(`select[name="meal_${i}"]`);
+    if (sel) mealsSelected.push(sel.value);
+  }
+
+  return mealsSelected;
+}
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
